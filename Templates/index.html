@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificação de Acessibilidade</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            font-size: 18px;
+            color: #333;
+            transition: color 0.3s, background-color 0.3s;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 0 auto 20px auto;
+            max-width: 600px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="url"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            background-color: #0066cc;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #004da1;
+        }
+        #loading {
+            display: none;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        .icon-button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+        }
+        .icon-button:hover {
+            background-color: #004da1;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .contraste {
+            background-color: #333;
+            color: white;
+        }
+        .font-size-large {
+            font-size: 1.5rem;
+        }
+        /* Novo estilo para o nome redondo */
+        .name-circle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Nome redondo no topo -->
+    <div class="name-circle" aria-label="Luciana">SICAPI</div>
+    
+    <h1 id="form-title">Verificação de Acessibilidade</h1>
+    <form action="{{ url_for('index') }}" method="post" onsubmit="mostrarLoading()" aria-labelledby="form-title">
+        <label for="url">Digite a URL a ser analisada:</label>
+        <input type="url" id="url" name="url" placeholder="exemplo.com" required aria-required="true" aria-label="Campo para inserir a URL a ser analisada">
+        <button type="submit">Verificar</button>
+    </form>
+    
+    <div id="loading" role="alert">Analisando a acessibilidade... Por favor, aguarde.</div>
+   
+    <div class="button-container">
+        <button class="icon-button" onclick="toggleContrast()" aria-label="Alternar contraste">
+            <i class="fas fa-adjust"></i>
+        </button>
+        <button class="icon-button" onclick="adjustFontSize()" aria-label="Aumentar fonte">
+            <i class="fas fa-text-height"></i>
+        </button>
+        <button class="icon-button" onclick="readAloud('Verificação de acessibilidade. Digite a URL a ser analisada. Clique no botão para verificar a acessibilidade.')" aria-label="Ler texto em voz alta">
+            <i class="fas fa-volume-up"></i>
+        </button>
+        <button class="icon-button" onclick="stopReading()" aria-label="Parar leitura">
+            <i class="fas fa-volume-mute"></i>
+        </button>
+    </div>
+
+    <a href="https://www.w3.org/WAI/" target="_blank">Saiba mais sobre acessibilidade na web</a>
+
+    <script>
+        let utterance = null;
+
+        // Função para ler um texto específico
+        function readAloud(text) {
+            utterance = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(utterance);
+        }
+
+        function mostrarLoading() {
+            document.getElementById("loading").style.display = "block";
+            readAloud('Analisando a acessibilidade... Por favor, aguarde.');
+        }
+
+        function toggleContrast() {
+            document.body.classList.toggle('contraste');
+            document.querySelector('h1').classList.toggle('contraste');
+            const form = document.querySelector('form');
+            form.classList.toggle('contraste');
+        }
+
+        function adjustFontSize() {
+            document.body.classList.toggle('font-size-large');
+        }
+
+        function stopReading() {
+            if (utterance) {
+                speechSynthesis.cancel();
+            }
+        }
+
+        // Lê o texto inicial ao carregar a página
+        window.onload = function() {
+            readAloud('Verificação de acessibilidade. Digite a URL a ser analisada. Clique no botão para verificar a acessibilidade.');
+        }
+    </script>
+</body>
+</html>

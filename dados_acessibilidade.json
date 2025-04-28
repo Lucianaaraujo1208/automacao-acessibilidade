@@ -1,0 +1,26 @@
+[
+    {
+        "descricao": "Acesso inadequado na entrada.",
+        "solucao": "Adicionar rampas."
+    },
+    {
+        "descricao": "Falta de sinalização.",
+        "solucao": "Adicionar placas informativas."
+    },
+    {
+        "descricao": "Ensures every id attribute value of active elements is unique",
+        "solucao": "Verifique se todos os IDs dos elementos ativos são únicos na página."
+    },
+    {
+        "descricao": "Ensures links have discernible text",
+        "solucao": "Adicione texto descritivo aos links para que o propósito deles seja claro."
+    },
+    {
+        "descricao": "Ensures headings have discernible text",
+        "solucao": "Adicione texto aos cabeçalhos para garantir que eles não estejam vazios."
+    },
+    {
+        "descricao": "Ensures <iframe> and <frame> elements have an accessible name",
+        "solucao": "Adicione um atributo 'title' aos elementos <iframe> e <frame>."
+    }
+]

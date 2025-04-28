@@ -1,0 +1,8 @@
+Flask
+selenium
+webdriver-manager
+pandas
+scikit-learn
+axe-selenium-python
+numpy
+requests

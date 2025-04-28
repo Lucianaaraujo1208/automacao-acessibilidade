@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados da Análise de Acessibilidade</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center; /* Centering the heading */
+        }
+        h2 {
+            color: #3a05fc; /* Cor do texto */
+            font-family: 'Poppins', sans-serif; /* Fonte arredondada */
+        }
+        h3 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #f9f9f9;
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        hr {
+            border: 1px solid #ddd;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        <!-- .name-circle {
+            position: fixed; /* Keeps the circle fixed on the page */
+            top: 10px; /* Distance from the top */
+            left: 10px; /* Distance from the left edge */
+            background-color: #0066cc;
+            color: white;
+            border-radius: 50%;
+            width: 50px;  /* Reduced size for a smaller circle */
+            height: 50px; /* Reduced size for a smaller circle */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px; /* Smaller font size */
+            font-weight: bold;
+            z-index: 1000; /* Ensure the circle stays above other content */
+        }
+    </style>
+</head>
+<body>
+    <h2>SICAPI</h2>
+    <h1>Resultados da Análise de Acessibilidade</h1>
+    
+    <h3>Site Analisado</h3>
+    <p><strong>URL:</strong> <a href="{{ url }}" target="_blank">{{ url }}</a></p>
+
+    <h3>Quantidade de Problemas Encontrados: {{ violations_count }}</h3> <!-- Exibe a quantidade de violações -->
+
+    {% if violations %}
+        <h3>Problemas Encontrados</h3>
+        <ul>
+            {% for violation in violations %}
+                <li>
+                    <strong>Descrição:</strong> {{ violation.descricao }}<br>
+                    <strong>Ajuda:</strong> {{ violation.ajuda }}<br>
+                    <strong>Impacto:</strong> {{ violation.impacto or "Nenhum impacto" }}<br>
+                    <strong>Elemento:</strong> {{ violation.elemento or "N/A" }}<br>
+                    <strong>Sugestão:</strong> <a href="{{ violation.sugestao }}" target="_blank">Mais informações</a><br>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Não foi encontrado problemas de acessibilidade.</p>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}">Voltar</a>
+</body>
+</html>
